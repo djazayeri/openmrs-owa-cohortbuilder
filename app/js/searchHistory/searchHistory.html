@@ -1,0 +1,7 @@
+Search History:
+<div ng-hide="vm.hasAnySearches()">
+    No searches
+</div>
+<div>
+    <search ng-repeat="s in vm.getSearchHistory()" search="s"></search>
+</div>
