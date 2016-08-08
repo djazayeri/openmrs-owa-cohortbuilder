@@ -4,8 +4,8 @@ class SearchHistoryController {
         this.SearchService = SearchService;
     }
 
-    addSearch(search) {
-        this.SearchService.addSearch(search);
+    addSearch(search, paramValues) {
+        this.SearchService.addSearch(search, paramValues);
     }
 
     hasAnySearches() {

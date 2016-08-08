@@ -8,9 +8,11 @@ class SearchService {
     // TODO get context path from manifest.webapp
   }
 
-  addSearch(search) {
+  addSearch(search, paramValues) {
     let toAdd = angular.copy(search);
     toAdd.index = this.searchHistory.length + 1;
+    toAdd.paramValues = paramValues;
+
     this.searchHistory.push(toAdd);
     this.evaluateSearch(toAdd);
   }
@@ -18,8 +20,21 @@ class SearchService {
   evaluateSearch(search) {
     search.loading = true;
     if (search.definitionLibraryKey) {
+      let paramVals = '';
+      if (search.paramValues) {
+          paramVals = '<parameterValues>';
+          angular.forEach(search.paramValues, function(val, key) {
+              var param = search.parameters.find(function(p) { return p.name == key; });
+              paramVals += '<entry>';
+              paramVals += `<string>${key}</string>`;
+              paramVals += `<${param.datatype}>${val.value}</${param.datatype}>`;
+              paramVals += '</entry>';
+          });
+          paramVals += '</parameterValues>';
+      }
       search.serializedXml = `<org.openmrs.module.reporting.cohort.definition.DefinitionLibraryCohortDefinition>
                             <definitionKey>${search.definitionLibraryKey}</definitionKey>
+                            ${paramVals}
                         </org.openmrs.module.reporting.cohort.definition.DefinitionLibraryCohortDefinition>`
 
     }

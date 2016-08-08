@@ -1,6 +1,12 @@
 class SearchController {
     formatDisplay(search) {
-        return `${search.index}. ${search.name}`;
+        let ret = `${search.index}. ${search.label}`;
+        if (search.paramValues) {
+            angular.forEach(search.paramValues, function(val, key) {
+                ret += `\n${key} = ${val.display}`;
+            });
+        }
+        return ret;
     }
     formatResults(search) {
         if (search.loading) {

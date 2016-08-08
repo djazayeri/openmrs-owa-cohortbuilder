@@ -5,9 +5,31 @@ class SearchesController {
         this.SearchService = SearchService;
     }
 
-    addSearch(search) {
-        this.SearchService.addSearch(search);
+    getParametersAndAddSearch(search) {
+        if (search.parameters && search.parameters.length > 0) {
+            this.getParametersForSearch = search;
+            this.parameterValues = {};
+        }
+        else {
+            this.SearchService.addSearch(search);
+        }
     }
+
+    searchWithParameters() {
+        this.SearchService.addSearch(this.getParametersForSearch, this.parameterValues);
+        this.getParametersForSearch = null;
+        this.parameterValues = null;
+    }
+
+    cancelSearchWithParameters() {
+        this.getParametersForSearch = null;
+        this.parameterValues = null;
+    }
+
+    setParameterValue(parameter, value) {
+        this.parameterValues[parameter.name] = value;
+    }
+
 }
 
 export default SearchesController;

@@ -1,6 +1,18 @@
 Shortcuts:
 <ul>
     <li ng-repeat="s in vm.shortcuts">
-        <a ng-click="vm.addSearch(s)">{{s.name}}</a>
+        <a ng-click="vm.getParametersAndAddSearch(s)">{{s.label}}</a>
     </li>
 </ul>
+
+<div ng-show="vm.getParametersForSearch">
+    {{vm.getParametersForSearch.label}}...
+    <div ng-repeat="parameter in vm.getParametersForSearch.parameters">
+        {{parameter.label}}
+        {{parameter.required ? "(required)" : "(optional)" }}
+        <widget parameter="parameter" template="parameter.widget"
+                on-change="vm.setParameterValue(parameter, value)"></widget>
+    </div>
+    <button ng-click="vm.searchWithParameters()">Search</button>
+    <button ng-click="vm.cancelSearchWithParameters()">Cancel</button>
+</div>
