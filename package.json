@@ -9,6 +9,7 @@
   "dependencies": {
     "angular": "^1.5.8",
     "angular-ui-router": "^0.3.0",
+    "moment": "^2.15.1",
     "openmrs-contrib-uicommons": "^0.3.29"
   },
   "devDependencies": {

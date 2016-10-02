@@ -1,3 +1,5 @@
+import datatypeHandlers from '../datatypeHandlers.js';
+
 class WidgetController {
     constructor($scope) {
         'ngInject';
@@ -9,7 +11,7 @@ class WidgetController {
         let parameter = this.parameter;
         this.$scope.$watch('vm.value', function(newVal) {
             let valueToSet = newVal ? {
-                                display: newVal,
+                                display: datatypeHandlers[parameter.datatype].format(newVal),
                                 value: newVal
                             } : null;
             onChangeCallback({

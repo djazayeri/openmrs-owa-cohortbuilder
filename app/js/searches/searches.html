@@ -6,7 +6,7 @@ Shortcuts:
 </ul>
 
 <div ng-show="vm.getParametersForSearch">
-    {{vm.getParametersForSearch.label}}...
+    {{vm.getParametersForSearch.label}}
     <div ng-repeat="parameter in vm.getParametersForSearch.parameters">
         {{parameter.label}}
         {{parameter.required ? "(required)" : "(optional)" }}

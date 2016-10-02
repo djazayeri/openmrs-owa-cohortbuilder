@@ -1,4 +1,5 @@
 <div>
     <span>{{ vm.formatDisplay(vm.search) }}</span>
     <span>{{ vm.formatResults(vm.search) }}</span>
+    <button ng-click="vm.removeFromHistory(vm.search)">Remove</button>
 </div>

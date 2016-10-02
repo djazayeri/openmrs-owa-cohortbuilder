@@ -12,7 +12,7 @@ let searchComponent = {
     controllerAs: 'vm'
 };
 
-let searchesModule = angular.module('search', [ ])
+let searchesModule = angular.module('search', [ 'searchService' ])
         .component('search', searchComponent);
 
 export default searchesModule;

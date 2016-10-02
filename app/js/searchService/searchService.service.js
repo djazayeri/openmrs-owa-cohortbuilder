@@ -1,4 +1,6 @@
 import angular from 'angular';
+import moment from 'moment';
+import datatypeHandlers from '../datatypeHandlers.js';
 
 class SearchService {
   constructor($http) {
@@ -17,6 +19,18 @@ class SearchService {
     this.evaluateSearch(toAdd);
   }
 
+  removeSearch(index) {
+      let indexZeroBased = index - 1;
+      this.searchHistory.splice(indexZeroBased, 1);
+      this.resetIndexes();
+  }
+
+  resetIndexes() {
+      this.searchHistory.forEach(function(search, i) {
+          search.index = i + 1;
+      });
+  }
+
   evaluateSearch(search) {
     search.loading = true;
     if (search.definitionLibraryKey) {
@@ -24,11 +38,15 @@ class SearchService {
       if (search.paramValues) {
           paramVals = '<parameterValues>';
           angular.forEach(search.paramValues, function(val, key) {
-              var param = search.parameters.find(function(p) { return p.name == key; });
-              paramVals += '<entry>';
-              paramVals += `<string>${key}</string>`;
-              paramVals += `<${param.datatype}>${val.value}</${param.datatype}>`;
-              paramVals += '</entry>';
+              if (val) {
+                  var param = search.parameters.find(function (p) {
+                      return p.name == key;
+                  });
+                  paramVals += '<entry>';
+                  paramVals += `<string>${key}</string>`;
+                  paramVals += datatypeHandlers[param.datatype].toXstream(val);
+                  paramVals += '</entry>';
+              }
           });
           paramVals += '</parameterValues>';
       }
